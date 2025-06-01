@@ -1,0 +1,22 @@
+.customBox {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.circle {
+    align-items: center !important;
+}
+
+.triangleText {
+    line-height: 56px !important;
+}
+
+.minWidthBig {
+    min-width: 160px !important;
+}
+
+.minWidthSmall {
+    min-width: 80px !important;
+}
