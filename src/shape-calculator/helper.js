@@ -38,7 +38,16 @@ const getDimensions = (p1, p2) => {
   const dx = Math.abs(p1.x - p2.x);
   const dy = Math.abs(p1.y - p2.y);
 
-  return {dx, dy}
+  return [dx, dy];
 };
 
-export { parsePoint, distance, isCorner, getAreaSquare, getPerimeterSquare, getAreaRectangle, getPerimeterRectangle, getDimensions };
+export {
+  parsePoint,
+  distance,
+  isCorner,
+  getAreaSquare,
+  getPerimeterSquare,
+  getAreaRectangle,
+  getPerimeterRectangle,
+  getDimensions,
+};

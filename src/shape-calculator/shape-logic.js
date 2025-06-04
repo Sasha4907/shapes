@@ -40,7 +40,7 @@ const getSquareResult = (field1, field2, value1, value2) => {
         area = getAreaSquare(side);
         perimeter = getPerimeterSquare(side);
       } else {
-        return;
+        throw new Error('Unable to calculate. Please check input.')
       }
     }
   }

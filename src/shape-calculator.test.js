@@ -40,6 +40,30 @@ describe('ShapeCalculator', () => {
     });
   });
 
+  it('calculates Square area by Coordinate', async () => {
+    const mockSetResult = jest.fn();
+    render(<ShapeCalculator shape="Square" setResult={mockSetResult} />);
+
+    fireEvent.mouseDown(screen.getByLabelText('Field 1'));
+    const listbox1 = await screen.findByRole('listbox');
+    fireEvent.click(within(listbox1).getByText('TopRight'));
+
+    fireEvent.change(screen.getByLabelText(/Value 1/i), { target: { value: '1,1' } });
+
+    fireEvent.mouseDown(screen.getByLabelText('Field 2'));
+    const listbox2 = await screen.findByRole('listbox');
+    fireEvent.click(within(listbox2).getByText('BottomLeft'));
+
+    fireEvent.change(screen.getByLabelText(/Value 2/i), { target: { value: '3,3' } });
+
+    fireEvent.click(screen.getByRole('button', { name: /Calculate/i }));
+
+    expect(mockSetResult).toHaveBeenCalledWith({
+      area: '4.0',
+      perimeter: '8.0',
+    });
+  });
+
   it('calculates area and perimeter for Circle', () => {
     const mockSetResult = jest.fn();
     render(<ShapeCalculator shape="Circle" setResult={mockSetResult} />);

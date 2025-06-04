@@ -40,9 +40,13 @@ const ShapeCalculator = ({ shape, setResult }) => {
     let perimeter = null;
 
     if (shape === 'Square') {
-      [area, perimeter] = getSquareResult(field1, field2, value1, value2)
+      try {
+        [area, perimeter] = getSquareResult(field1, field2, value1, value2);
+      } catch (error) {
+        alert(error);
+      }
     } else if (shape === 'Rectangle') {
-      [area, perimeter] = getRectangleResult(field1, field2, value1, value2)
+      [area, perimeter] = getRectangleResult(field1, field2, value1, value2);
     } else if (shape === 'Circle') {
       const radius = parseFloat(circleData.radius);
       if (!isNaN(radius)) {
