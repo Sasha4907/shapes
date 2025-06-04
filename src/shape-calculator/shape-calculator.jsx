@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Box, FormControl, InputLabel, Select, MenuItem, Button, TextField, Typography } from '@mui/material';
 import styles from './styles.module.css';
-import { distance, isCorner, parsePoint } from './helper';
+import {
+  getAreaSquare,
+  distance,
+  isCorner,
+  parsePoint,
+  getPerimeterSquare,
+  getAreaRectangle,
+  getPerimeterRectangle,
+  getDimensions,
+} from './helper';
 import SHAPE_FIELD_OPTIONS from '../constant';
+import { getRectangleResult, getSquareResult } from './shape-logic';
 
 const ShapeCalculator = ({ shape, setResult }) => {
   const [field1, setField1] = useState('');
@@ -30,57 +40,9 @@ const ShapeCalculator = ({ shape, setResult }) => {
     let perimeter = null;
 
     if (shape === 'Square') {
-      if (field1 === 'Side' || field2 === 'Side') {
-        const side = parseFloat(field1 === 'Side' ? value1 : value2);
-        if (!isNaN(side)) {
-          area = side ** 2;
-          perimeter = 4 * side;
-        }
-      } else if (isCorner(field1) && isCorner(field2)) {
-        const p1 = parsePoint(value1);
-        const p2 = parsePoint(value2);
-        if (p1 && p2) {
-          const dx = Math.abs(p1.x - p2.x);
-          const dy = Math.abs(p1.y - p2.y);
-
-          const sameY = p1.y === p2.y;
-          const sameX = p1.x === p2.x;
-
-          if (sameY && dx > 0) {
-            const side = dx;
-            area = side * side;
-            perimeter = 4 * side;
-          } else if (sameX && dy > 0) {
-            const side = dy;
-            area = side * side;
-            perimeter = 4 * side;
-          } else if (dx === dy) {
-            const side = dx;
-            area = side * side;
-            perimeter = 4 * side;
-          } else {
-            return;
-          }
-        }
-      }
+      [area, perimeter] = getSquareResult(field1, field2, value1, value2)
     } else if (shape === 'Rectangle') {
-      if ((field1 === 'Width' && field2 === 'Height') || (field1 === 'Height' && field2 === 'Width')) {
-        const width = parseFloat(field1 === 'Width' ? value1 : value2);
-        const height = parseFloat(field1 === 'Height' ? value1 : value2);
-        if (!isNaN(width) && !isNaN(height)) {
-          area = width * height;
-          perimeter = 2 * (width + height);
-        }
-      } else if (isCorner(field1) && isCorner(field2)) {
-        const p1 = parsePoint(value1);
-        const p2 = parsePoint(value2);
-        if (p1 && p2) {
-          const width = Math.abs(p1.x - p2.x);
-          const height = Math.abs(p1.y - p2.y);
-          area = width * height;
-          perimeter = 2 * (width + height);
-        }
-      }
+      [area, perimeter] = getRectangleResult(field1, field2, value1, value2)
     } else if (shape === 'Circle') {
       const radius = parseFloat(circleData.radius);
       if (!isNaN(radius)) {
